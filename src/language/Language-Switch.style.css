@@ -1,0 +1,23 @@
+.language-switch {
+ width: fit-content;
+}
+
+.language-switch label {
+ display: grid;
+}
+
+.language-switch label .content {
+ opacity: 0;
+ height: 0;
+ display: grid;
+ transition: opacity var(--primary-transition);
+}
+
+.language-switch svg {
+ cursor: pointer;
+ z-index: 10;
+}
+
+.language-switch:has(input:checked) .content {
+ opacity: 1;
+}

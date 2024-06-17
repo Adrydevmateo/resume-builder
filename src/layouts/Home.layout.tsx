@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+import LanguageSwitch from "../language/Language-Switch"
 
 interface Props {
  children: React.ReactNode
@@ -13,8 +14,8 @@ export default function HomeLayout({ children }: Props) {
      <Link to="/sing-in">Sign In</Link>
      <Link to="/sing-up">Sign Up</Link>
     </nav>
+    <LanguageSwitch />
    </header>
-
 
    {children}
   </div>
