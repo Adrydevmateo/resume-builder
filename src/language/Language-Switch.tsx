@@ -1,7 +1,10 @@
-import { SetLanguage } from './Language'
+
 import './Language-Switch.style.css'
+import LanguageStore from './Language.store'
 
 export default function LanguageSwitch() {
+
+ const { SetLanguage } = LanguageStore()
 
  return (
   <div className="language-switch">
