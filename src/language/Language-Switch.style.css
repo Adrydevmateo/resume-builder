@@ -18,6 +18,14 @@
  z-index: 10;
 }
 
+.language-switch .content svg {
+ pointer-events: none;
+}
+
 .language-switch:has(input:checked) .content {
  opacity: 1;
+}
+
+.language-switch:has(input:checked) .content svg {
+ pointer-events: initial;
 }
