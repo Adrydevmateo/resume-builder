@@ -1,15 +1,18 @@
 .language-switch {
- width: fit-content;
+ position: absolute;
+ right: 1em;
 }
 
 .language-switch label {
- display: grid;
+ position: relative;
 }
 
 .language-switch label .content {
+ position: absolute;
+ display: grid;
  opacity: 0;
  height: 0;
- display: grid;
+ pointer-events: none;
  transition: opacity var(--primary-transition);
 }
 
@@ -18,11 +21,8 @@
  z-index: 10;
 }
 
-.language-switch .content svg {
- pointer-events: none;
-}
-
 .language-switch:has(input:checked) .content {
+ pointer-events: none;
  opacity: 1;
 }
 

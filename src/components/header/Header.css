@@ -1,0 +1,22 @@
+#header-comp {
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ gap: 1em;
+ padding: 1em;
+ box-shadow: 0em .1em .1em rgba(0, 4, 255, 0.274);
+ position: relative;
+}
+
+#header-comp nav {
+ display: flex;
+ gap: 1em;
+}
+
+#header-comp nav svg {
+ cursor: pointer;
+}
+
+#header-comp .hamburger-wrapper {
+ display: none;
+}
