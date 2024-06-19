@@ -12,6 +12,7 @@
  display: grid;
  opacity: 0;
  height: 0;
+ top: -4.3em;
  pointer-events: none;
  transition: opacity var(--primary-transition);
 }
