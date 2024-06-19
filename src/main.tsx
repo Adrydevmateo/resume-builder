@@ -6,6 +6,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import HomeLayout from './layouts/Home.layout.tsx'
 
 const Home = lazy(() => import('./pages/home/home.page.tsx'))
+const SignIn = lazy(() => import('./pages/account/Sign-In.tsx'))
 
 const router = createBrowserRouter([
  {
@@ -14,6 +15,16 @@ const router = createBrowserRouter([
    <Suspense fallback={<LoadingScreen />}>
     <HomeLayout>
      <Home />
+    </HomeLayout>
+   </Suspense>
+  )
+ },
+ {
+  path: '/sign-in',
+  element: (
+   <Suspense fallback={<LoadingScreen />}>
+    <HomeLayout>
+     <SignIn />
     </HomeLayout>
    </Suspense>
   )
