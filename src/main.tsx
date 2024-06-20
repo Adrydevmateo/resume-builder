@@ -5,7 +5,7 @@ import './assets/style/index.css'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import HomeLayout from './layouts/Home.layout.tsx'
 
-const Home = lazy(() => import('./pages/home/home.page.tsx'))
+const Home = lazy(() => import('./pages/home/Home.page.tsx'))
 const SignIn = lazy(() => import('./pages/account/Sign-In.tsx'))
 const SignUp = lazy(() => import('./pages/account/Sign-Up.tsx'))
 const ForgotPassword = lazy(() => import('./pages/account/Forgot-Password.tsx'))
