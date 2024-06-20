@@ -1,39 +1,22 @@
-import { FormEvent, ReactElement } from "react"
+import { FormEvent } from "react"
 import { TLanguage } from "../../language/Language.type"
 import LanguageStore from "../../language/Language.store"
-
-type TField = {
- label: string,
- placeholder?: string,
- icon: ReactElement,
- visible: boolean,
- required?: boolean
-}
-
-type TLink = {
- label: string,
- to: string,
-}
-
-interface Props {
- fields: {
-  username?: TField,
-  email?: TField,
-  password?: TField,
-  confirm_password?: TField
- },
- submit: {
-  label: string,
-  func: (name: string) => string
- },
- links?: Array<TLink>
-}
+import { IFields, TField, TLink } from "./Form.type"
 
 const translations: Record<string, Record<TLanguage, string>> = {
  required_field_msg: {
   en: 'This field is required',
   es: 'Este campo es requerido'
  }
+}
+
+interface Props {
+ fields: IFields<TField>,
+ submit: {
+  label: string,
+  func: (data: any) => void
+ },
+ links?: Array<TLink>
 }
 
 export default function Form({ fields, submit, links }: Props) {
@@ -45,11 +28,15 @@ export default function Form({ fields, submit, links }: Props) {
   const form = e.target as HTMLFormElement
 
   const formData = new FormData(form)
-  const email = formData.get('email')
+  const fields = formData.entries()
 
-  console.log('Form Data: ', email);
+  const data: Record<string, string> = {}
 
-  submit.func('Dante')
+  for (const field of fields) {
+   data[field[0]] = field[1].toString()
+  }
+
+  submit.func(data)
  }
 
  return (

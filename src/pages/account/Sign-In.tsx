@@ -1,4 +1,5 @@
 import Form from "../../components/form/Form";
+import { IFields } from "../../components/form/Form.type";
 
 export default function SignIn() {
 
@@ -20,11 +21,10 @@ export default function SignIn() {
     }}
     submit={{
      label: 'Submit',
-     func(name) {
-      return 'Hello ' + name
+     func(data: IFields<string>) {
+      console.log(data);
      }
     }}
-
     links={[
      { label: 'Sign Up', to: 'sign-up' },
      { label: 'Forgot Password', to: 'forgot-password' }
