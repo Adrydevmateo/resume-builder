@@ -9,6 +9,7 @@
  gap: 1em;
  padding: 1em;
  box-shadow: 0em .1em .1em rgba(0, 4, 255, 0.274);
+ pointer-events: none;
 }
 
 #header-comp nav {
@@ -16,10 +17,7 @@
  gap: 1em;
 }
 
-#header-comp nav svg {
+#header-comp svg {
  cursor: pointer;
-}
-
-#header-comp .hamburger-wrapper {
- display: none;
+ pointer-events: initial;
 }

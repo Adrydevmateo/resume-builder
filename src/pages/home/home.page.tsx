@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function Home() {
 
  return (
@@ -5,7 +7,8 @@ export default function Home() {
    <div className="hero">
     <h1>Resume Builder</h1>
     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic eius enim esse eum consectetur porro deleniti sint labore quis velit quidem a saepe voluptate, earum non commodi voluptas assumenda similique?</p>
-    <a href="/">Build Your Resume</a>
+    <a href="/"></a>
+    <Link to='resume-builder'>Build Your Resume</Link>
    </div>
 
    <div className="how-to-use">

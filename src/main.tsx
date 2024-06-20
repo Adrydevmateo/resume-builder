@@ -7,6 +7,9 @@ import HomeLayout from './layouts/Home.layout.tsx'
 
 const Home = lazy(() => import('./pages/home/home.page.tsx'))
 const SignIn = lazy(() => import('./pages/account/Sign-In.tsx'))
+const SignUp = lazy(() => import('./pages/account/Sign-Up.tsx'))
+const ForgotPassword = lazy(() => import('./pages/account/Forgot-Password.tsx'))
+
 
 const router = createBrowserRouter([
  {
@@ -25,6 +28,26 @@ const router = createBrowserRouter([
    <Suspense fallback={<LoadingScreen />}>
     <HomeLayout>
      <SignIn />
+    </HomeLayout>
+   </Suspense>
+  )
+ },
+ {
+  path: '/sign-up',
+  element: (
+   <Suspense fallback={<LoadingScreen />}>
+    <HomeLayout>
+     <SignUp />
+    </HomeLayout>
+   </Suspense>
+  )
+ },
+ {
+  path: '/forgot-password',
+  element: (
+   <Suspense fallback={<LoadingScreen />}>
+    <HomeLayout>
+     <ForgotPassword />
     </HomeLayout>
    </Suspense>
   )

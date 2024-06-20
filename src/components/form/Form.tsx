@@ -2,6 +2,7 @@ import { FormEvent } from "react"
 import { TLanguage } from "../../language/Language.type"
 import LanguageStore from "../../language/Language.store"
 import { IFields, TField, TLink } from "./Form.type"
+import { Link } from "react-router-dom"
 
 const translations: Record<string, Record<TLanguage, string>> = {
  required_field_msg: {
@@ -94,7 +95,7 @@ export default function Form({ fields, submit, links }: Props) {
      links &&
      links.length > 0 &&
      links?.map((link, index) => (
-      <a href={link.to} key={index}>{link.label}</a>
+      <Link key={index} to={link.to}>{link.label}</Link>
      ))
     }
    </div>
