@@ -1,11 +1,15 @@
-import Form from "../../components/form/Form";
-import { IFields } from "../../components/form/Form.type";
+import Form from "../../../components/form/Form";
+import { IFields } from "../../../components/form/Form.type";
+import LanguageStore from "../../../language/Language.store";
+import { SignInTranslations } from './Sign-In.translation'
 
 export default function SignIn() {
 
+ const { language } = LanguageStore()
+
  return (
   <div id="sign-in-page">
-   <h1>Sign In</h1>
+   <h1>{SignInTranslations.title[language]}</h1>
    <Form
     fields={{
      username: {
