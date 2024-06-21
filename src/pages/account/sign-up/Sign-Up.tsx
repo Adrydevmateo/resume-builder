@@ -1,5 +1,5 @@
-import Form from "../../components/form/Form";
-import { IFields } from "../../components/form/Form.type";
+import Form from "../../../components/form/Form";
+import { IFields } from "../../../components/form/Form.type";
 
 export default function SignUp() {
 
