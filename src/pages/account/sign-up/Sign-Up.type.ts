@@ -6,13 +6,15 @@ type UserAttribute = {
  error_msg: Record<TLanguage, string>
 }
 
-export interface SignInForm {
+export interface SignUpForm {
  title: Record<TLanguage, string>
  username: UserAttribute,
  password: UserAttribute,
+ email: UserAttribute,
+ confirm_password: UserAttribute,
  submit: Record<TLanguage, string>,
  links: {
-  sign_up: Record<TLanguage, string>,
+  sign_in: Record<TLanguage, string>,
   forgot_password: Record<TLanguage, string>,
  }
 }

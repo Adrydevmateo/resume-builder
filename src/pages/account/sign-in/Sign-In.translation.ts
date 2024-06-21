@@ -1,14 +1,14 @@
-import { Form } from "./Sign-In.type";
+import { SignInForm } from "./Sign-In.type";
 
-export const SignInTranslations: Form = {
+export const SignInTranslations: SignInForm = {
  title: {
   en: 'Sign In',
-  es: ''
+  es: 'Iniciar Sesión'
  },
  username: {
   label: {
    en: 'Username',
-   es: ''
+   es: 'Usuario'
   },
   placeholder: {
    en: '',
@@ -22,35 +22,7 @@ export const SignInTranslations: Form = {
  password: {
   label: {
    en: 'Password',
-   es: ''
-  },
-  placeholder: {
-   en: '',
-   es: ''
-  },
-  error_msg: {
-   en: '',
-   es: ''
-  }
- },
- email: {
-  label: {
-   en: '',
-   es: ''
-  },
-  placeholder: {
-   en: '',
-   es: ''
-  },
-  error_msg: {
-   en: '',
-   es: ''
-  }
- },
- confirm_password: {
-  label: {
-   en: '',
-   es: ''
+   es: 'Contraseña'
   },
   placeholder: {
    en: '',
@@ -62,17 +34,17 @@ export const SignInTranslations: Form = {
   }
  },
  submit: {
-  en: 'Submit',
-  es: ''
+  en: 'Access',
+  es: 'Acceder'
  },
  links: {
   sign_up: {
    en: 'Sign Up',
-   es: ''
+   es: 'Crear Cuenta'
   },
   forgot_password: {
    en: 'Forgot Password',
-   es: ''
+   es: 'Recuperar Contraseña'
   }
  }
 }
