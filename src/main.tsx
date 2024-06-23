@@ -9,6 +9,7 @@ const Home = lazy(() => import('./pages/home/Home.page.tsx'))
 const SignIn = lazy(() => import('./pages/account/sign-in/Sign-In.tsx'))
 const SignUp = lazy(() => import('./pages/account/sign-up/Sign-Up.tsx'))
 const ForgotPassword = lazy(() => import('./pages/account/forgot-password/Forgot-Password.tsx'))
+const Builder = lazy(() => import('./pages/resume/builder/Builder.page.tsx'))
 
 const router = createBrowserRouter([
  {
@@ -48,6 +49,14 @@ const router = createBrowserRouter([
     <HomeLayout>
      <ForgotPassword />
     </HomeLayout>
+   </Suspense>
+  )
+ },
+ {
+  path: '/resumes/builder',
+  element: (
+   <Suspense fallback={<LoadingScreen />}>
+    <Builder />
    </Suspense>
   )
  },
