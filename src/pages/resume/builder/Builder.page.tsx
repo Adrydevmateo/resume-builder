@@ -55,10 +55,17 @@ export default function Builder() {
 	}
 
 	const AddAchievementToExperience = (experience_id: string) => {
-		const experience = experiences.find(f => f.ID === experience_id)
-		experience?.achievements.push({
-			ID: crypto.randomUUID(),
-			value: 'Work'
+		setExperiences((current) => {
+			current.map(c => {
+				if (c.ID === experience_id) {
+					c.achievements.push({
+						ID: crypto.randomUUID(),
+						value: 'Work'
+					})
+				}
+			})
+
+			return [...current]
 		})
 	}
 
