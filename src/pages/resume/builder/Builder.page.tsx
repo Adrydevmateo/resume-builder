@@ -233,6 +233,39 @@ export default function Builder() {
 	}
 	//#endregion Interests
 
+	//#region Personal Info
+	const SavePersonalInfo = (e: FormEvent) => {
+		e.preventDefault()
+		const form = e.target as HTMLFormElement
+		const data = GetFormData(form)
+		console.log('Data: ', data)
+	}
+	//#endregion Personal Info
+
+	//#region Skills
+	type Skill = {
+		ID: string,
+		value: string,
+		edited: boolean
+	}
+	const [skills, setSkills] = useState<Array<Skill>>([])
+
+	const AddSkill = () => {
+		setSkills((current) => [...current, {
+			ID: crypto.randomUUID(),
+			value: 'New Skill',
+			edited: false
+		}])
+	}
+
+	const SaveSkills = (e: FormEvent) => {
+		e.preventDefault()
+		const form = e.target as HTMLFormElement
+		const data = GetFormData(form)
+		console.log('Data: ', data)
+	}
+	//#endregion Skills
+
 	return (
 		<div id="builder-page">
 			{/* header */}
@@ -275,35 +308,37 @@ export default function Builder() {
 
 						{/* Experience Title */}
 						<div className="form-field">
-							<label htmlFor='experience-title'>Experience Title</label>
-							<input type="text" name="experience-title" id='experience-title' placeholder="Ex: Web Developer ..." />
+							<label htmlFor={`experience-title-${e.ID}`}>Experience Title</label>
+							<input type="text" name={`experience-title-${e.ID}`} id={`experience-title-${e.ID}`} placeholder="Ex: Web Developer ..." />
 						</div>
 
 						{/* Employer */}
 						<div className="form-field">
-							<label htmlFor='experience-employer'>Experience Employer</label>
-							<input type="text" name="experience-employer" id='experience-employer' placeholder="Ex: Google ..." />
+							<label htmlFor={`experience-employer-${e.ID}`}>Experience Employer</label>
+							<input type="text" name={`experience-employer-${e.ID}`} id={`experience-employer-${e.ID}`} placeholder="Ex: Google ..." />
 						</div>
 
 						{/* Start Date */}
 						<div className="form-field">
-							<label htmlFor='experience-start-date'>Start Date</label>
-							<input type="date" name="experience-start-date" id='experience-start-date' />
+							<label htmlFor={`experience-start-date-${e.ID}`}>Start Date</label>
+							<input type="date" name={`experience-start-date-${e.ID}`} id={`experience-start-date-${e.ID}`} />
 						</div>
 
 						{/* End Date */}
 						<div className="form-field">
-							<label htmlFor='experience-end-date'>Start Date</label>
-							<input type="date" name="experience-end-date" id='experience-end-date' />
+							<label htmlFor={`experience-end-date-${e.ID}`}>Start Date</label>
+							<input type="date" name={`experience-end-date-${e.ID}`} id={`experience-end-date-${e.ID}`} />
 						</div>
 
 						{/* List of Achievements */}
 						<ul className="experience-achievements">
+
 							{e.achievements.map(a => (
 								<div className="form-field" key={a.ID}>
 									<input type="text" name={`experience-achievement-${a.ID}`} id={`experience-achievement-${a.ID}`} placeholder="Achievement" />
 								</div>
 							))}
+
 							<button type="button" onClick={() => AddAchievementToExperience(e.ID)}>+</button>
 						</ul>
 
@@ -322,20 +357,20 @@ export default function Builder() {
 
 						{/* Education Title */}
 						<div className="form-field">
-							<label htmlFor='education-title'>Education Title</label>
-							<input type="text" name="education-title" id='education-title' placeholder="Ex: Computer Science ..." />
+							<label htmlFor={`education-title-${e.ID}`}>Education Title</label>
+							<input type="text" name={`education-title-${e.ID}`} id={`education-title-${e.ID}`} placeholder="Ex: Computer Science ..." />
 						</div>
 
 						{/* Education Start Date */}
 						<div className="form-field">
-							<label htmlFor='education-start-date'>Start Date</label>
-							<input type="date" name="education-start-date" id='education-start-date' />
+							<label htmlFor={`education-start-date-${e.ID}`}>Start Date</label>
+							<input type="date" name={`education-start-date-${e.ID}`} id={`education-start-date-${e.ID}`} />
 						</div>
 
 						{/* Education End Date */}
 						<div className="form-field">
-							<label htmlFor='education-end-date'>End Date</label>
-							<input type="date" name="education-end-date" id='education-end-date' />
+							<label htmlFor={`education-end-date-${e.ID}`}>End Date</label>
+							<input type="date" name={`education-end-date-${e.ID}`} id={`education-end-date-${e.ID}`} />
 						</div>
 
 						{/* Achievements */}
@@ -363,20 +398,20 @@ export default function Builder() {
 
 						{/* Certification Title */}
 						<div className='form-field'>
-							<label htmlFor='certification-title'>Certification</label>
-							<input type='text' name='certification-title' id='certification-title' placeholder='Ex: Web Basics ...' />
+							<label htmlFor={`certification-title-${c.ID}`}>Certification</label>
+							<input type='text' name={`certification-title-${c.ID}`} id={`certification-title-${c.ID}`} placeholder='Ex: Web Basics ...' />
 						</div>
 
 						{/* Education Start Date */}
 						<div className="form-field">
-							<label htmlFor='certification-start-date'>Start Date</label>
-							<input type="date" name="certification-start-date" id='certification-start-date' />
+							<label htmlFor={`certification-start-date-${c.ID}`}>Start Date</label>
+							<input type="date" name={`certification-start-date-${c.ID}`} id={`certification-start-date-${c.ID}`} />
 						</div>
 
 						{/* Education End Date */}
 						<div className="form-field">
-							<label htmlFor='certification-end-date'>End Date</label>
-							<input type="date" name="certification-end-date" id='certification-end-date' />
+							<label htmlFor={`certification-end-date-${c.ID}`}>End Date</label>
+							<input type="date" name={`certification-end-date-${c.ID}`} id={`certification-end-date-${c.ID}`} />
 						</div>
 
 					</form>
@@ -392,7 +427,7 @@ export default function Builder() {
 
 						{/* Interest */}
 						<div className="form-field">
-							<input type="text" name="interest-value" id="interest-value" placeholder='Music ...' />
+							<input type="text" name={`interest-value-${i.ID}`} id={`interest-value-${i.ID}`} placeholder='Music ...' />
 						</div>
 
 					</form>
@@ -400,6 +435,51 @@ export default function Builder() {
 
 				<button onClick={AddInterest}>+</button>
 			</div>
+
+			{/* Candidate Personal Info */}
+			<form hidden id="personal-info-form" onSubmit={SavePersonalInfo}>
+
+				{/* Address */}
+				<div className="form-field">
+					<label htmlFor="personal-info-address">Address</label>
+					<input type="text" name="personal-info-address" id="personal-info-address" placeholder='Ex: NY City ...' />
+				</div>
+
+				{/* Phone */}
+				<div className="form-field">
+					<label htmlFor="personal-info-phone">Phone</label>
+					<input type="text" name="personal-info-phone" id="personal-info-phone" placeholder='Ex: 1 - 347 ...' />
+				</div>
+
+				{/* E-mail */}
+				<div className="form-field">
+					<label htmlFor="personal-info-email">E-mail</label>
+					<input type="text" name="personal-info-email" id="personal-info-email" placeholder='Ex: candidate@gmail.com' />
+				</div>
+
+				{/* LinkedIn */}
+				<div className="form-field">
+					<label htmlFor="personal-info-linkedin">LinkedIn</label>
+					<input type="text" name="personal-info-linkedin" id="personal-info-linkedin" placeholder='Your linkedin profile link' />
+				</div>
+
+				<button type="submit">Save</button>
+			</form>
+
+			{/* Candidate Skills */}
+			<form hidden id="skills-form" onSubmit={SaveSkills}>
+
+				{skills.map(s => (
+					<div className="form-field" key={s.ID}>
+						<input type="text" name={`candidate-skill-${s.ID}`} id={`candidate-skill-${s.ID}`} placeholder='Ex: team management ...' />
+					</div>
+				))}
+
+				<button type="button" onClick={AddSkill}>+</button>
+
+				<button type="submit">Save</button>
+
+			</form>
 
 		</div>
 	)
