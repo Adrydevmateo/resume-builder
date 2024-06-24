@@ -5,33 +5,6 @@ type Achievement = {
 	value: string
 }
 
-type Experience = {
-	ID: string,
-	title: string,
-	employer: string,
-	start_date: Date,
-	end_date: Date,
-	achievements: Array<Achievement>,
-	save: (e: FormEvent) => void
-}
-
-type Education = {
-	ID: string,
-	title: string,
-	start_date: Date,
-	end_date: Date,
-	achievements: Array<Achievement>,
-	save: (e: FormEvent) => void
-}
-
-type Certification = {
-	ID: string,
-	title: string,
-	start_date: Date,
-	end_date: Date,
-	save: (e: FormEvent) => void
-}
-
 export default function Builder() {
 	// Utils
 	const GetFormData = (form: HTMLFormElement) => {
@@ -59,6 +32,16 @@ export default function Builder() {
 	//#endregion Introduction
 
 	//#region Experiences
+	type Experience = {
+		ID: string,
+		title: string,
+		employer: string,
+		start_date: Date,
+		end_date: Date,
+		achievements: Array<Achievement>,
+		save: (e: FormEvent) => void
+	}
+
 	const [experiences, setExperiences] = useState<Array<Experience>>([
 		{
 			ID: crypto.randomUUID(),
@@ -119,6 +102,15 @@ export default function Builder() {
 	//#endregion Experiences
 
 	//#region Education
+	type Education = {
+		ID: string,
+		title: string,
+		start_date: Date,
+		end_date: Date,
+		achievements: Array<Achievement>,
+		save: (e: FormEvent) => void
+	}
+
 	const [education, setEducation] = useState<Array<Education>>([
 		{
 			ID: crypto.randomUUID(),
@@ -168,6 +160,14 @@ export default function Builder() {
 	//#endregion Education
 
 	//#region Certifications
+	type Certification = {
+		ID: string,
+		title: string,
+		start_date: Date,
+		end_date: Date,
+		save: (e: FormEvent) => void
+	}
+
 	const [certifications, setCertifications] = useState<Array<Certification>>([
 		{
 			ID: crypto.randomUUID(),
@@ -266,6 +266,36 @@ export default function Builder() {
 	}
 	//#endregion Skills
 
+	//#region Working Tools
+	enum EnumLevel {
+		GOOD = 50,
+		VERY_GOOD = 80,
+		EXCELLENT = 100
+	}
+
+	type Tool = {
+		ID: string,
+		name: string,
+		level: EnumLevel
+		save: (e: FormEvent) => void
+	}
+	const [tools, setTools] = useState<Array<Tool>>([])
+
+	const AddTool = () => {
+		setTools((current) => [...current, {
+			ID: crypto.randomUUID(),
+			name: 'New Working Tool',
+			level: EnumLevel.GOOD,
+			save(e: FormEvent) {
+				e.preventDefault()
+				const form = e.target as HTMLFormElement
+				const data = GetFormData(form)
+				console.log('Data: ', data)
+			},
+		}])
+	}
+	//#endregion Working Tools
+
 	return (
 		<div id="builder-page">
 			{/* header */}
@@ -352,6 +382,7 @@ export default function Builder() {
 			{/* Candidate Education */}
 			<div hidden id="education-section">
 				<h2>Education</h2>
+
 				{education.map(e => (
 					<form className="education-form" key={e.ID} onSubmit={e.save}>
 
@@ -393,6 +424,8 @@ export default function Builder() {
 
 			{/* Candidate Certifications */}
 			<div hidden id="certifications-section">
+				<h2>Certifications</h2>
+
 				{certifications.map(c => (
 					<form className="certification-form" key={c.ID} onSubmit={c.save}>
 
@@ -422,6 +455,8 @@ export default function Builder() {
 
 			{/* Candidate Interests */}
 			<div hidden id="interests-section">
+				<h2>Interests</h2>
+
 				{interests.map(i => (
 					<form key={i.ID} onSubmit={i.save}>
 
@@ -438,6 +473,7 @@ export default function Builder() {
 
 			{/* Candidate Personal Info */}
 			<form hidden id="personal-info-form" onSubmit={SavePersonalInfo}>
+				<h2>Personal Information</h2>
 
 				{/* Address */}
 				<div className="form-field">
@@ -468,6 +504,7 @@ export default function Builder() {
 
 			{/* Candidate Skills */}
 			<form hidden id="skills-form" onSubmit={SaveSkills}>
+				<h2>Skills</h2>
 
 				{skills.map(s => (
 					<div className="form-field" key={s.ID}>
@@ -480,6 +517,34 @@ export default function Builder() {
 				<button type="submit">Save</button>
 
 			</form>
+
+			{/* Candidate Working Tools */}
+			<div hidden id="working-tools-section">
+				<h2>Working Tools</h2>
+
+				{tools.map(t => (
+					<form key={t.ID} onSubmit={t.save}>
+
+						{/* Tool Name */}
+						<div className="form-field">
+							<label htmlFor={`working-tool-name-${t.ID}`}>Tool Name</label>
+							<input type="text" name={`working-tool-name-${t.ID}`} id={`working-tool-name-${t.ID}`} placeholder="Google Docs ..." />
+						</div>
+
+						{/* Tool Level */}
+						{/* TODO: Make this a select field */}
+						<div className="form-field">
+							<label htmlFor={`working-tool-level-${t.ID}`}>Level Of Use</label>
+							<input type="text" name={`working-tool-level-${t.ID}`} id={`working-tool-level-${t.ID}`} />
+						</div>
+
+						<button type="submit">Save</button>
+
+					</form>
+				))}
+
+				<button type="button" onClick={AddTool}>+</button>
+			</div>
 
 		</div>
 	)
