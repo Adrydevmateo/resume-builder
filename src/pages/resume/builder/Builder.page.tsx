@@ -1,8 +1,11 @@
 import { FormEvent, useState } from "react"
 import { Certification, Education, EnumLevel, Experience, Interest, Skill, Tool } from "./Builder.type"
 import { GetFormData } from "./Builder"
+import BuilderStore from "./Builder.store"
 
 export default function Builder() {
+
+	const { experiences, AddExperience, AddAchievementToExperience } = BuilderStore()
 
 	//#region Introduction
 	const SaveIntroduction = (e: FormEvent) => {
@@ -12,46 +15,6 @@ export default function Builder() {
 		console.log('Data: ', data)
 	}
 	//#endregion Introduction
-
-	//#region Experiences
-	const [experiences, setExperiences] = useState<Array<Experience>>([])
-
-	const AddExperience = () => {
-		setExperiences((current) => [...current, {
-			ID: crypto.randomUUID(),
-			title: 'Web Developer',
-			employer: 'Google',
-			start_date: new Date(),
-			end_date: new Date(),
-			achievements: [
-				{
-					ID: crypto.randomUUID(),
-					value: 'Work'
-				}
-			],
-			save(e: FormEvent) {
-				e.preventDefault()
-				const form = e.target as HTMLFormElement
-				const data = GetFormData(form)
-				console.log('Data: ', data)
-			},
-		}])
-	}
-
-	const AddAchievementToExperience = (experience_id: string) => {
-		const newExperiences = experiences.map(e => {
-			if (e.ID === experience_id) {
-				e.achievements.push({
-					ID: crypto.randomUUID(),
-					value: 'Work'
-				})
-			}
-			return e
-		})
-
-		setExperiences(newExperiences)
-	}
-	//#endregion Experiences
 
 	//#region Education
 	const [education, setEducation] = useState<Array<Education>>([])
@@ -203,7 +166,7 @@ export default function Builder() {
 			</form>
 
 			{/* Candidate Experiences */}
-			<div hidden id="experience-section">
+			<div id="experience-section">
 				<h2>Experience</h2>
 
 				{/* Experience Form */}
@@ -243,7 +206,7 @@ export default function Builder() {
 								</div>
 							))}
 
-							<button type="button" onClick={() => AddAchievementToExperience(e.ID)}>+</button>
+							<button type="button" onClick={() => AddAchievementToExperience(e.ID, experiences)}>+</button>
 						</ul>
 
 						<button type="submit">Save</button>
