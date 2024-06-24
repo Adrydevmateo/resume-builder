@@ -200,6 +200,37 @@ export default function Builder() {
 	//#endregion Certifications
 
 	//#region Interests
+	type Interest = {
+		ID: string,
+		value: string,
+		save: (e: FormEvent) => void
+	}
+
+	const [interests, setInterests] = useState<Array<Interest>>([
+		{
+			ID: crypto.randomUUID(),
+			value: 'New Interest',
+			save(e: FormEvent) {
+				e.preventDefault()
+				const form = e.target as HTMLFormElement
+				const data = GetFormData(form)
+				console.log('Data: ', data)
+			},
+		}
+	])
+
+	const AddInterest = () => {
+		setInterests((current) => [...current, {
+			ID: crypto.randomUUID(),
+			value: 'New Interest',
+			save(e: FormEvent) {
+				e.preventDefault()
+				const form = e.target as HTMLFormElement
+				const data = GetFormData(form)
+				console.log('Data: ', data)
+			},
+		}])
+	}
 	//#endregion Interests
 
 	return (
@@ -326,7 +357,7 @@ export default function Builder() {
 			</div>
 
 			{/* Candidate Certifications */}
-			<div id="certifications-section">
+			<div hidden id="certifications-section">
 				{certifications.map(c => (
 					<form className="certification-form" key={c.ID} onSubmit={c.save}>
 
@@ -352,6 +383,22 @@ export default function Builder() {
 				))}
 
 				<button onClick={AddCertification}>+</button>
+			</div>
+
+			{/* Candidate Interests */}
+			<div hidden id="interests-section">
+				{interests.map(i => (
+					<form key={i.ID} onSubmit={i.save}>
+
+						{/* Interest */}
+						<div className="form-field">
+							<input type="text" name="interest-value" id="interest-value" placeholder='Music ...' />
+						</div>
+
+					</form>
+				))}
+
+				<button onClick={AddInterest}>+</button>
 			</div>
 
 		</div>
