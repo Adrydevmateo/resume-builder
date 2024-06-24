@@ -1,26 +1,8 @@
 import { FormEvent, useState } from "react"
-
-type Achievement = {
-	ID: string,
-	value: string
-}
+import { Certification, Education, EnumLevel, Experience, Interest, Skill, Tool } from "./Builder.type"
+import { GetFormData } from "./Builder"
 
 export default function Builder() {
-	// Utils
-	const GetFormData = (form: HTMLFormElement) => {
-		type SubmitData = Record<string, FormDataEntryValue>
-
-		const form_data = new FormData(form)
-		const entries = form_data.entries()
-
-		const data: SubmitData = {}
-
-		for (const entry of entries) {
-			data[entry[0]] = entry[1]
-		}
-
-		return data
-	}
 
 	//#region Introduction
 	const SaveIntroduction = (e: FormEvent) => {
@@ -32,37 +14,7 @@ export default function Builder() {
 	//#endregion Introduction
 
 	//#region Experiences
-	type Experience = {
-		ID: string,
-		title: string,
-		employer: string,
-		start_date: Date,
-		end_date: Date,
-		achievements: Array<Achievement>,
-		save: (e: FormEvent) => void
-	}
-
-	const [experiences, setExperiences] = useState<Array<Experience>>([
-		{
-			ID: crypto.randomUUID(),
-			title: 'Web Developer',
-			employer: 'Google',
-			start_date: new Date(),
-			end_date: new Date(),
-			achievements: [
-				{
-					ID: crypto.randomUUID(),
-					value: 'Work'
-				}
-			],
-			save(e: FormEvent) {
-				e.preventDefault()
-				const form = e.target as HTMLFormElement
-				const data = GetFormData(form)
-				console.log('Data: ', data)
-			},
-		}
-	])
+	const [experiences, setExperiences] = useState<Array<Experience>>([])
 
 	const AddExperience = () => {
 		setExperiences((current) => [...current, {
@@ -102,30 +54,7 @@ export default function Builder() {
 	//#endregion Experiences
 
 	//#region Education
-	type Education = {
-		ID: string,
-		title: string,
-		start_date: Date,
-		end_date: Date,
-		achievements: Array<Achievement>,
-		save: (e: FormEvent) => void
-	}
-
-	const [education, setEducation] = useState<Array<Education>>([
-		{
-			ID: crypto.randomUUID(),
-			title: 'New Education',
-			start_date: new Date(),
-			end_date: new Date(),
-			achievements: [],
-			save(e: FormEvent) {
-				e.preventDefault()
-				const form = e.target as HTMLFormElement
-				const data = GetFormData(form)
-				console.log('Data: ', data)
-			},
-		}
-	])
+	const [education, setEducation] = useState<Array<Education>>([])
 
 	const AddEducation = () => {
 		setEducation((current) => [...current, {
@@ -160,28 +89,7 @@ export default function Builder() {
 	//#endregion Education
 
 	//#region Certifications
-	type Certification = {
-		ID: string,
-		title: string,
-		start_date: Date,
-		end_date: Date,
-		save: (e: FormEvent) => void
-	}
-
-	const [certifications, setCertifications] = useState<Array<Certification>>([
-		{
-			ID: crypto.randomUUID(),
-			title: 'New Certification',
-			start_date: new Date(),
-			end_date: new Date(),
-			save(e: FormEvent) {
-				e.preventDefault()
-				const form = e.target as HTMLFormElement
-				const data = GetFormData(form)
-				console.log('Data: ', data)
-			},
-		}
-	])
+	const [certifications, setCertifications] = useState<Array<Certification>>([])
 
 	const AddCertification = () => {
 		setCertifications((current) => [...current, {
@@ -200,24 +108,7 @@ export default function Builder() {
 	//#endregion Certifications
 
 	//#region Interests
-	type Interest = {
-		ID: string,
-		value: string,
-		save: (e: FormEvent) => void
-	}
-
-	const [interests, setInterests] = useState<Array<Interest>>([
-		{
-			ID: crypto.randomUUID(),
-			value: 'New Interest',
-			save(e: FormEvent) {
-				e.preventDefault()
-				const form = e.target as HTMLFormElement
-				const data = GetFormData(form)
-				console.log('Data: ', data)
-			},
-		}
-	])
+	const [interests, setInterests] = useState<Array<Interest>>([])
 
 	const AddInterest = () => {
 		setInterests((current) => [...current, {
@@ -243,11 +134,6 @@ export default function Builder() {
 	//#endregion Personal Info
 
 	//#region Skills
-	type Skill = {
-		ID: string,
-		value: string,
-		edited: boolean
-	}
 	const [skills, setSkills] = useState<Array<Skill>>([])
 
 	const AddSkill = () => {
@@ -267,18 +153,6 @@ export default function Builder() {
 	//#endregion Skills
 
 	//#region Working Tools
-	enum EnumLevel {
-		GOOD = 50,
-		VERY_GOOD = 80,
-		EXCELLENT = 100
-	}
-
-	type Tool = {
-		ID: string,
-		name: string,
-		level: EnumLevel
-		save: (e: FormEvent) => void
-	}
 	const [tools, setTools] = useState<Array<Tool>>([])
 
 	const AddTool = () => {
