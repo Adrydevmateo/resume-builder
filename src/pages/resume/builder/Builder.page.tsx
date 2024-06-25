@@ -5,7 +5,7 @@ import BuilderStore from "./Builder.store"
 
 export default function Builder() {
 
-	const { experiences, AddExperience, AddAchievementToExperience, education, AddEducation, AddAchievementToEducation } = BuilderStore()
+	const { experiences, AddExperience, AddAchievementToExperience, education, AddEducation, AddAchievementToEducation, certifications, AddCertification, interests, AddInterest } = BuilderStore()
 
 	//#region Introduction
 	const SaveIntroduction = (e: FormEvent) => {
@@ -15,42 +15,6 @@ export default function Builder() {
 		console.log('Data: ', data)
 	}
 	//#endregion Introduction
-
-	//#region Certifications
-	const [certifications, setCertifications] = useState<Array<Certification>>([])
-
-	const AddCertification = () => {
-		setCertifications((current) => [...current, {
-			ID: crypto.randomUUID(),
-			title: 'New Certification',
-			start_date: new Date(),
-			end_date: new Date(),
-			save(e: FormEvent) {
-				e.preventDefault()
-				const form = e.target as HTMLFormElement
-				const data = GetFormData(form)
-				console.log('Data: ', data)
-			},
-		}])
-	}
-	//#endregion Certifications
-
-	//#region Interests
-	const [interests, setInterests] = useState<Array<Interest>>([])
-
-	const AddInterest = () => {
-		setInterests((current) => [...current, {
-			ID: crypto.randomUUID(),
-			value: 'New Interest',
-			save(e: FormEvent) {
-				e.preventDefault()
-				const form = e.target as HTMLFormElement
-				const data = GetFormData(form)
-				console.log('Data: ', data)
-			},
-		}])
-	}
-	//#endregion Interests
 
 	//#region Personal Info
 	const SavePersonalInfo = (e: FormEvent) => {
@@ -182,7 +146,7 @@ export default function Builder() {
 			</div>
 
 			{/* Candidate Education */}
-			<div id="education-section">
+			<div hidden id="education-section">
 				<h2>Education</h2>
 
 				{education.map(e => (
@@ -249,6 +213,8 @@ export default function Builder() {
 							<input type="date" name={`certification-end-date-${c.ID}`} id={`certification-end-date-${c.ID}`} />
 						</div>
 
+						<button type="submit">Save</button>
+
 					</form>
 				))}
 
@@ -256,7 +222,7 @@ export default function Builder() {
 			</div>
 
 			{/* Candidate Interests */}
-			<div hidden id="interests-section">
+			<div id="interests-section">
 				<h2>Interests</h2>
 
 				{interests.map(i => (
@@ -267,6 +233,7 @@ export default function Builder() {
 							<input type="text" name={`interest-value-${i.ID}`} id={`interest-value-${i.ID}`} placeholder='Music ...' />
 						</div>
 
+						<button type="submit">Save</button>
 					</form>
 				))}
 

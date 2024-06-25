@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { Education, Experience } from './Builder.type'
+import { Certification, Education, Experience, Interest } from './Builder.type'
 import { FormEvent } from 'react'
 import { GetFormData } from './Builder'
 
@@ -15,6 +15,18 @@ interface BuilderState {
 	AddEducation: () => void,
 	AddAchievementToEducation: (education_id: string, education: Array<Education>) => void,
 	//#endregion Education
+
+	//#region Certifications
+	certifications: Array<Certification>,
+	AddCertification: () => void,
+	//#endregion Certifications
+
+	//#region Interests
+	interests: Array<Interest>,
+	AddInterest: () => void,
+	//#endregion Interests
+
+
 }
 
 const BuilderStore = create<BuilderState>((set) => ({
@@ -90,6 +102,39 @@ const BuilderStore = create<BuilderState>((set) => ({
 	},
 	//#endregion Education
 
+	//#region Certifications
+	certifications: [],
+	AddCertification: () => set((state) => ({
+		certifications: [...state.certifications, {
+			ID: crypto.randomUUID(),
+			title: 'New Certification',
+			start_date: new Date(),
+			end_date: new Date(),
+			save(e: FormEvent) {
+				e.preventDefault()
+				const form = e.target as HTMLFormElement
+				const data = GetFormData(form)
+				console.log('Data: ', data)
+			},
+		}]
+	})),
+	//#endregion Certifications
+
+	//#region Interests
+	interests: [],
+	AddInterest: () => set((state) => ({
+		interests: [...state.interests, {
+			ID: crypto.randomUUID(),
+			value: 'New Interest',
+			save(e: FormEvent) {
+				e.preventDefault()
+				const form = e.target as HTMLFormElement
+				const data = GetFormData(form)
+				console.log('Data: ', data)
+			},
+		}]
+	})),
+	//#endregion Interests
 
 }))
 
