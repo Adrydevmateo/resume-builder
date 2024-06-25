@@ -5,7 +5,7 @@ import BuilderStore from "./Builder.store"
 
 export default function Builder() {
 
-	const { experiences, AddExperience, AddAchievementToExperience } = BuilderStore()
+	const { experiences, AddExperience, AddAchievementToExperience, education, AddEducation, AddAchievementToEducation } = BuilderStore()
 
 	//#region Introduction
 	const SaveIntroduction = (e: FormEvent) => {
@@ -15,41 +15,6 @@ export default function Builder() {
 		console.log('Data: ', data)
 	}
 	//#endregion Introduction
-
-	//#region Education
-	const [education, setEducation] = useState<Array<Education>>([])
-
-	const AddEducation = () => {
-		setEducation((current) => [...current, {
-			ID: crypto.randomUUID(),
-			title: 'New Education',
-			start_date: new Date(),
-			end_date: new Date(),
-			achievements: [],
-			save(e: FormEvent) {
-				e.preventDefault()
-				const form = e.target as HTMLFormElement
-				const data = GetFormData(form)
-				console.log('Data: ', data)
-			},
-		}
-		])
-	}
-
-	const AddAchievementToEducation = (education_id: string) => {
-		const newEducation = education.map(e => {
-			if (e.ID === education_id) {
-				e.achievements.push({
-					ID: crypto.randomUUID(),
-					value: 'Education'
-				})
-			}
-			return e
-		})
-
-		setEducation(newEducation)
-	}
-	//#endregion Education
 
 	//#region Certifications
 	const [certifications, setCertifications] = useState<Array<Certification>>([])
@@ -166,7 +131,7 @@ export default function Builder() {
 			</form>
 
 			{/* Candidate Experiences */}
-			<div id="experience-section">
+			<div hidden id="experience-section">
 				<h2>Experience</h2>
 
 				{/* Experience Form */}
@@ -217,7 +182,7 @@ export default function Builder() {
 			</div>
 
 			{/* Candidate Education */}
-			<div hidden id="education-section">
+			<div id="education-section">
 				<h2>Education</h2>
 
 				{education.map(e => (
@@ -248,7 +213,7 @@ export default function Builder() {
 									<input type="text" name={`education-achievement-${a.ID}`} id={`education-achievement-${a.ID}`} placeholder="Achievement" />
 								</div>
 							))}
-							<button type="button" onClick={() => AddAchievementToEducation(e.ID)}>+</button>
+							<button type="button" onClick={() => AddAchievementToEducation(e.ID, education)}>+</button>
 						</ul>
 
 						<button type="submit">Save</button>
