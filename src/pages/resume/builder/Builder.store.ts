@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { Certification, Education, Experience, Interest } from './Builder.type'
+import { Certification, Education, Experience, Interest, Skill } from './Builder.type'
 import { FormEvent } from 'react'
 import { GetFormData } from './Builder'
 
@@ -26,6 +26,11 @@ interface BuilderState {
 	AddInterest: () => void,
 	//#endregion Interests
 
+	//#region Skills
+	skills: Array<Skill>,
+	AddSkill: () => void,
+	SaveSkills: (e: FormEvent) => void
+	//#endregion Skills
 
 }
 
@@ -135,6 +140,23 @@ const BuilderStore = create<BuilderState>((set) => ({
 		}]
 	})),
 	//#endregion Interests
+
+	//#region Skills,
+	skills: [],
+	AddSkill: () => set((state) => ({
+		skills: [...state.skills, {
+			ID: crypto.randomUUID(),
+			value: 'New Skill',
+			edited: false
+		}]
+	})),
+	SaveSkills(e) {
+		e.preventDefault()
+		const form = e.target as HTMLFormElement
+		const data = GetFormData(form)
+		console.log('Data: ', data)
+	},
+	//#endregion Skills
 
 }))
 

@@ -5,7 +5,7 @@ import BuilderStore from "./Builder.store"
 
 export default function Builder() {
 
-	const { experiences, AddExperience, AddAchievementToExperience, education, AddEducation, AddAchievementToEducation, certifications, AddCertification, interests, AddInterest } = BuilderStore()
+	const { experiences, AddExperience, AddAchievementToExperience, education, AddEducation, AddAchievementToEducation, certifications, AddCertification, interests, AddInterest, skills, AddSkill, SaveSkills } = BuilderStore()
 
 	//#region Introduction
 	const SaveIntroduction = (e: FormEvent) => {
@@ -24,25 +24,6 @@ export default function Builder() {
 		console.log('Data: ', data)
 	}
 	//#endregion Personal Info
-
-	//#region Skills
-	const [skills, setSkills] = useState<Array<Skill>>([])
-
-	const AddSkill = () => {
-		setSkills((current) => [...current, {
-			ID: crypto.randomUUID(),
-			value: 'New Skill',
-			edited: false
-		}])
-	}
-
-	const SaveSkills = (e: FormEvent) => {
-		e.preventDefault()
-		const form = e.target as HTMLFormElement
-		const data = GetFormData(form)
-		console.log('Data: ', data)
-	}
-	//#endregion Skills
 
 	//#region Working Tools
 	const [tools, setTools] = useState<Array<Tool>>([])
@@ -222,7 +203,7 @@ export default function Builder() {
 			</div>
 
 			{/* Candidate Interests */}
-			<div id="interests-section">
+			<div hidden id="interests-section">
 				<h2>Interests</h2>
 
 				{interests.map(i => (
