@@ -5,7 +5,7 @@ import BuilderStore from "./Builder.store"
 
 export default function Builder() {
 
-	const { experiences, AddExperience, AddAchievementToExperience, education, AddEducation, AddAchievementToEducation, certifications, AddCertification, interests, AddInterest, skills, AddSkill, SaveSkills } = BuilderStore()
+	const { experiences, AddExperience, AddAchievementToExperience, education, AddEducation, AddAchievementToEducation, certifications, AddCertification, interests, AddInterest, skills, AddSkill, SaveSkills, tools, AddTool } = BuilderStore()
 
 	//#region Introduction
 	const SaveIntroduction = (e: FormEvent) => {
@@ -24,24 +24,6 @@ export default function Builder() {
 		console.log('Data: ', data)
 	}
 	//#endregion Personal Info
-
-	//#region Working Tools
-	const [tools, setTools] = useState<Array<Tool>>([])
-
-	const AddTool = () => {
-		setTools((current) => [...current, {
-			ID: crypto.randomUUID(),
-			name: 'New Working Tool',
-			level: EnumLevel.GOOD,
-			save(e: FormEvent) {
-				e.preventDefault()
-				const form = e.target as HTMLFormElement
-				const data = GetFormData(form)
-				console.log('Data: ', data)
-			},
-		}])
-	}
-	//#endregion Working Tools
 
 	return (
 		<div id="builder-page">

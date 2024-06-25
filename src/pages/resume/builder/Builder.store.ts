@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { Certification, Education, Experience, Interest, Skill } from './Builder.type'
+import { Certification, Education, EnumLevel, Experience, Interest, Skill, Tool } from './Builder.type'
 import { FormEvent } from 'react'
 import { GetFormData } from './Builder'
 
@@ -31,6 +31,11 @@ interface BuilderState {
 	AddSkill: () => void,
 	SaveSkills: (e: FormEvent) => void
 	//#endregion Skills
+
+	//#region Working Tools
+	tools: Array<Tool>,
+	AddTool: () => void,
+	//#endregion Working Tools
 
 }
 
@@ -157,6 +162,23 @@ const BuilderStore = create<BuilderState>((set) => ({
 		console.log('Data: ', data)
 	},
 	//#endregion Skills
+
+	//#region Working Tools
+	tools: [],
+	AddTool: () => set((state) => ({
+		tools: [...state.tools, {
+			ID: crypto.randomUUID(),
+			name: 'New Working Tool',
+			level: EnumLevel.GOOD,
+			save(e: FormEvent) {
+				e.preventDefault()
+				const form = e.target as HTMLFormElement
+				const data = GetFormData(form)
+				console.log('Data: ', data)
+			},
+		}]
+	}))
+	//#endregion Working Tools
 
 }))
 
