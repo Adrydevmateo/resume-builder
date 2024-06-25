@@ -4,6 +4,10 @@ import { FormEvent } from 'react'
 import { GetFormData } from './Builder'
 
 interface BuilderState {
+	//#region Introduction
+	SaveIntroduction: (e: FormEvent) => void
+	//#endregion Introduction
+
 	//#region Experiences
 	experiences: Array<Experience>,
 	AddExperience: () => void,
@@ -26,6 +30,10 @@ interface BuilderState {
 	AddInterest: () => void,
 	//#endregion Interests
 
+	//#region Personal Information
+	SavePersonalInfo: (e: FormEvent) => void
+	//#endregion Personal Information
+
 	//#region Skills
 	skills: Array<Skill>,
 	AddSkill: () => void,
@@ -40,6 +48,15 @@ interface BuilderState {
 }
 
 const BuilderStore = create<BuilderState>((set) => ({
+	//#region Introduction
+	SaveIntroduction(e) {
+		e.preventDefault()
+		const form = e.target as HTMLFormElement
+		const data = GetFormData(form)
+		console.log('Data: ', data)
+	},
+	//#endregion Introduction
+
 	//#region Experiences
 	experiences: [],
 	AddExperience: () => set((state) => ({
@@ -145,6 +162,15 @@ const BuilderStore = create<BuilderState>((set) => ({
 		}]
 	})),
 	//#endregion Interests
+
+	//#region Personal Information
+	SavePersonalInfo(e) {
+		e.preventDefault()
+		const form = e.target as HTMLFormElement
+		const data = GetFormData(form)
+		console.log('Data: ', data)
+	},
+	//#endregion Personal Information
 
 	//#region Skills,
 	skills: [],

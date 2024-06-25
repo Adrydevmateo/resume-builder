@@ -1,29 +1,8 @@
-import { FormEvent, useState } from "react"
-import { Certification, Education, EnumLevel, Experience, Interest, Skill, Tool } from "./Builder.type"
-import { GetFormData } from "./Builder"
 import BuilderStore from "./Builder.store"
 
 export default function Builder() {
 
-	const { experiences, AddExperience, AddAchievementToExperience, education, AddEducation, AddAchievementToEducation, certifications, AddCertification, interests, AddInterest, skills, AddSkill, SaveSkills, tools, AddTool } = BuilderStore()
-
-	//#region Introduction
-	const SaveIntroduction = (e: FormEvent) => {
-		e.preventDefault()
-		const form = e.target as HTMLFormElement
-		const data = GetFormData(form)
-		console.log('Data: ', data)
-	}
-	//#endregion Introduction
-
-	//#region Personal Info
-	const SavePersonalInfo = (e: FormEvent) => {
-		e.preventDefault()
-		const form = e.target as HTMLFormElement
-		const data = GetFormData(form)
-		console.log('Data: ', data)
-	}
-	//#endregion Personal Info
+	const { SaveIntroduction, experiences, AddExperience, AddAchievementToExperience, education, AddEducation, AddAchievementToEducation, certifications, AddCertification, interests, AddInterest, SavePersonalInfo, skills, AddSkill, SaveSkills, tools, AddTool } = BuilderStore()
 
 	return (
 		<div id="builder-page">
@@ -33,7 +12,7 @@ export default function Builder() {
 			<h1>Resume Builder</h1>
 
 			{/* Candidate Introduction */}
-			<form hidden id="introduction-form" onSubmit={SaveIntroduction}>
+			<form id="introduction-form" onSubmit={SaveIntroduction}>
 				<h2>Introduction</h2>
 
 				{/* Candidate Name */}
