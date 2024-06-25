@@ -1,9 +1,22 @@
-import Form from "../../../components/form/Form";
-import { IFields } from "../../../components/form/Form.type";
-import LanguageStore from "../../../language/Language.store";
+import { useNavigate } from "react-router-dom"
+import Form from "../../../components/form/Form"
+import { IFields } from "../../../components/form/Form.type"
+import LanguageStore from "../../../language/Language.store"
 import { SignInTranslations } from './Sign-In.translation'
+import { useEffect } from "react"
 
 export default function SignIn() {
+ const navigate = useNavigate()
+
+ useEffect(() => {
+  const session = localStorage['session']
+  if (!session) return
+
+  const parsed_session = JSON.parse(session)
+  if (!parsed_session.token) return
+
+  navigate('/resumes/builder')
+ }, [])
 
  const { language } = LanguageStore()
 
@@ -26,7 +39,9 @@ export default function SignIn() {
     submit={{
      label: SignInTranslations.submit[language],
      func(data: IFields<string>) {
-      console.log(data);
+      if (!data.username) throw new Error('Username was not provided!')
+      if (!data.password) throw new Error('Password was not provided!')
+      console.log(data)
      }
     }}
     links={[
