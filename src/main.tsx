@@ -11,6 +11,30 @@ const SignUp = lazy(() => import('./pages/account/sign-up/Sign-Up.tsx'))
 const ForgotPassword = lazy(() => import('./pages/account/forgot-password/Forgot-Password.tsx'))
 const Builder = lazy(() => import('./pages/resume/builder/Builder.page.tsx'))
 
+function Authorize({ children }: { children: React.ReactNode }) {
+
+ const session = localStorage['session']
+ if (!session) return (
+  <Suspense fallback={<LoadingScreen />}>
+   <HomeLayout>
+    <SignIn />
+   </HomeLayout>
+  </Suspense>
+ )
+
+ const parsed_session = JSON.parse(session)
+ if (!parsed_session.token) return (
+  <Suspense fallback={<LoadingScreen />}>
+   <HomeLayout>
+    <SignIn />
+   </HomeLayout>
+  </Suspense>
+ )
+
+ return <>{children}</>
+
+}
+
 const router = createBrowserRouter([
  {
   path: '/',
@@ -55,9 +79,11 @@ const router = createBrowserRouter([
  {
   path: '/resumes/builder',
   element: (
-   <Suspense fallback={<LoadingScreen />}>
-    <Builder />
-   </Suspense>
+   <Authorize>
+    <Suspense fallback={<LoadingScreen />}>
+     <Builder />
+    </Suspense>
+   </Authorize>
   )
  },
  {
