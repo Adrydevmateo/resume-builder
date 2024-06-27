@@ -1,10 +1,10 @@
-import { useEffect } from "react"
+import { FormEvent, useEffect } from "react"
 import BuilderStore from "./Builder.store"
-import { GetIntroductionData } from "./Builder"
+import { GetIntroductionData, SaveIntroductionData } from "./Builder"
 
 export default function Builder() {
 
-	const { candidate_name, candidate_title, candidate_introduction, SetCandidateName, SetCandidateTitle, SetCandidateIntroduction, SaveIntroduction, experiences, AddExperience, AddAchievementToExperience, education, AddEducation, AddAchievementToEducation, certifications, AddCertification, interests, AddInterest, SavePersonalInfo, skills, AddSkill, SaveSkills, tools, AddTool } = BuilderStore()
+	const { candidate_name, candidate_title, candidate_introduction, SetCandidateName, SetCandidateTitle, SetCandidateIntroduction, experiences, AddExperience, AddAchievementToExperience, education, AddEducation, AddAchievementToEducation, certifications, AddCertification, interests, AddInterest, SavePersonalInfo, skills, AddSkill, SaveSkills, tools, AddTool } = BuilderStore()
 
 	useEffect(() => {
 		const introduction = GetIntroductionData()
@@ -17,6 +17,11 @@ export default function Builder() {
 		}
 	}, [])
 
+	const HandleSaveIntroduction = (e: FormEvent) => {
+		e.preventDefault()
+		SaveIntroductionData(e.target as HTMLFormElement)
+	}
+
 	return (
 		<div id="builder-page">
 			{/* header */}
@@ -25,7 +30,7 @@ export default function Builder() {
 			<h1>Resume Builder</h1>
 
 			{/* Candidate Introduction */}
-			<form id="introduction-form" onSubmit={SaveIntroduction}>
+			<form id="introduction-form" onSubmit={HandleSaveIntroduction}>
 				<h2>Introduction</h2>
 				<h3>Name: {candidate_name}</h3>
 				<h3>Title: {candidate_title}</h3>
