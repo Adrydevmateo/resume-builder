@@ -5,6 +5,14 @@ import { GetFormData } from './Builder'
 
 interface BuilderState {
 	//#region Introduction
+	candidate_name: string,
+	candidate_title: string,
+	candidate_introduction: string,
+	//#region Setters
+	SetCandidateName: (candidate_name: string) => void
+	SetCandidateTitle: (candidate_title: string) => void
+	SetCandidateIntroduction: (candidate_introduction: string) => void
+	//#endregion Setters
 	SaveIntroduction: (e: FormEvent) => void
 	//#endregion Introduction
 
@@ -49,11 +57,25 @@ interface BuilderState {
 
 const BuilderStore = create<BuilderState>((set) => ({
 	//#region Introduction
+	candidate_name: '',
+	candidate_title: '',
+	candidate_introduction: '',
+	//#region Setters
+	SetCandidateName: (candidate_name) => set(() => ({
+		candidate_name: candidate_name
+	})),
+	SetCandidateTitle: (candidate_title) => set(() => ({
+		candidate_title: candidate_title
+	})),
+	SetCandidateIntroduction: (candidate_introduction) => set(() => ({
+		candidate_introduction: candidate_introduction
+	})),
+	//#endregion Setters
 	SaveIntroduction(e) {
 		e.preventDefault()
 		const form = e.target as HTMLFormElement
 		const data = GetFormData(form)
-		console.log('Data: ', data)
+		localStorage['resume-introduction'] = JSON.stringify(data)
 	},
 	//#endregion Introduction
 

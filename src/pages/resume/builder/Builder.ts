@@ -12,3 +12,12 @@ export const GetFormData = (form: HTMLFormElement) => {
 
 	return data
 }
+
+export const GetIntroductionData = () => {
+	const data = localStorage['resume-introduction']
+	if (!data) return {}
+	const introduction = JSON.parse(data)
+	return introduction
+}
+
+export const SaveIntroductionData = () => { }

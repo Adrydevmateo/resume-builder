@@ -1,8 +1,21 @@
+import { useEffect } from "react"
 import BuilderStore from "./Builder.store"
+import { GetIntroductionData } from "./Builder"
 
 export default function Builder() {
 
-	const { SaveIntroduction, experiences, AddExperience, AddAchievementToExperience, education, AddEducation, AddAchievementToEducation, certifications, AddCertification, interests, AddInterest, SavePersonalInfo, skills, AddSkill, SaveSkills, tools, AddTool } = BuilderStore()
+	const { candidate_name, candidate_title, candidate_introduction, SetCandidateName, SetCandidateTitle, SetCandidateIntroduction, SaveIntroduction, experiences, AddExperience, AddAchievementToExperience, education, AddEducation, AddAchievementToEducation, certifications, AddCertification, interests, AddInterest, SavePersonalInfo, skills, AddSkill, SaveSkills, tools, AddTool } = BuilderStore()
+
+	useEffect(() => {
+		const introduction = GetIntroductionData()
+		return () => {
+			//#region Introduction
+			SetCandidateName(introduction.candidate_name)
+			SetCandidateTitle(introduction.candidate_title)
+			SetCandidateIntroduction(introduction.candidate_introduction)
+			//#endregion Introduction
+		}
+	}, [])
 
 	return (
 		<div id="builder-page">
@@ -14,23 +27,26 @@ export default function Builder() {
 			{/* Candidate Introduction */}
 			<form id="introduction-form" onSubmit={SaveIntroduction}>
 				<h2>Introduction</h2>
+				<h3>Name: {candidate_name}</h3>
+				<h3>Title: {candidate_title}</h3>
+				<h3>Introduction: {candidate_introduction}</h3>
 
 				{/* Candidate Name */}
 				<div className="form-field">
-					<label htmlFor='candidate-name'>Your Name</label>
-					<input type="text" name="candidate-name" id='candidate-name' placeholder="Ex: Adry ..." />
+					<label htmlFor='candidate_name'>Your Name</label>
+					<input type="text" name="candidate_name" id='candidate_name' placeholder="Ex: Adry ..." value={candidate_name} onChange={({ target }) => SetCandidateName(target.value)} />
 				</div>
 
 				{/* Candidate Title */}
 				<div className="form-field">
-					<label htmlFor='candidate-title'>Your Title</label>
-					<input type="text" name="candidate-title" id='candidate-title' placeholder="Ex: Web Developer ..." />
+					<label htmlFor='candidate_title'>Your Title</label>
+					<input type="text" name="candidate_title" id='candidate_title' placeholder="Ex: Web Developer ..." value={candidate_title} onChange={({ target }) => SetCandidateTitle(target.value)} />
 				</div>
 
 				{/* Candidate Introduction */}
 				<div className="form-field">
-					<label htmlFor='candidate-introduction'>Introduction</label>
-					<input type="text" name="candidate-introduction" id='candidate-introduction' placeholder="Ex: I'm a ..." />
+					<label htmlFor='candidate_introduction'>Introduction</label>
+					<input type="text" name="candidate_introduction" id='candidate_introduction' placeholder="Ex: I'm a ..." value={candidate_introduction} onChange={({ target }) => SetCandidateIntroduction(target.value)} />
 				</div>
 
 				<button type="submit">Save</button>
