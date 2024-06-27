@@ -3,7 +3,6 @@ import { Certification, Education, EnumLevel, Experience, Interest, Skill, Tool 
 import { FormEvent } from 'react'
 import { GetFormData } from '../../../utils/forms.util'
 
-
 interface BuilderState {
 	//#region Introduction
 	candidate_name: string,
