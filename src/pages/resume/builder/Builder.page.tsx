@@ -1,11 +1,14 @@
 import { FormEvent, useEffect, useState } from "react"
 import BuilderStore from "./Builder.store"
 import { GetIntroductionData, SaveIntroductionData } from "./Builder"
+import { Experience } from "./Builder.type"
+import { GetFormData } from "../../../utils/forms.util"
 
 export default function Builder() {
 
-	const { experiences, AddExperience, AddAchievementToExperience, education, AddEducation, AddAchievementToEducation, certifications, AddCertification, interests, AddInterest, SavePersonalInfo, skills, AddSkill, SaveSkills, tools, AddTool } = BuilderStore()
+	const { education, AddEducation, AddAchievementToEducation, certifications, AddCertification, interests, AddInterest, SavePersonalInfo, skills, AddSkill, SaveSkills, tools, AddTool } = BuilderStore()
 
+	//#region Introduction State
 	const [introduction, setIntroduction] = useState({
 		candidate_name: '',
 		candidate_title: '',
@@ -28,6 +31,49 @@ export default function Builder() {
 		e.preventDefault()
 		SaveIntroductionData(e.target as HTMLFormElement)
 	}
+	//#endregion Introduction State
+
+
+	//#region Experience State
+	const [experiences, setExperiences] = useState<Array<Experience>>([])
+
+	const AddExperience = () => {
+		setExperiences([...experiences, {
+			ID: crypto.randomUUID(),
+			title: 'Web Developer',
+			employer: 'Google',
+			start_date: new Date(),
+			end_date: new Date(),
+			achievements: [
+				{
+					ID: crypto.randomUUID(),
+					value: 'Work'
+				}
+			],
+			save(e: FormEvent) {
+				e.preventDefault()
+				const form = e.target as HTMLFormElement
+				const data = GetFormData(form)
+				console.log('Data: ', data)
+			},
+		}])
+	}
+
+	const AddAchievementToExperience = (experience_id: string) => {
+		const new_experiences = experiences.map(e => {
+			if (e.ID === experience_id) {
+				e.achievements.push({
+					ID: crypto.randomUUID(),
+					value: 'Work'
+				})
+			}
+			return e
+		})
+
+		setExperiences(() => new_experiences)
+	}
+
+	//#endregion Experience State
 
 	useEffect(() => {
 		return () => {
@@ -43,11 +89,8 @@ export default function Builder() {
 			<h1>Resume Builder</h1>
 
 			{/* Candidate Introduction */}
-			<form id="introduction-form" onSubmit={HandleSaveIntroduction}>
+			<form hidden id="introduction-form" onSubmit={HandleSaveIntroduction}>
 				<h2>Introduction</h2>
-				<h3>Name: {introduction.candidate_name}</h3>
-				<h3>Title: {introduction.candidate_title}</h3>
-				<h3>Introduction: {introduction.candidate_introduction}</h3>
 
 				{/* Candidate Name */}
 				<div className="form-field">
@@ -71,7 +114,7 @@ export default function Builder() {
 			</form>
 
 			{/* Candidate Experiences */}
-			<div hidden id="experience-section">
+			<div id="experience-section">
 				<h2>Experience</h2>
 
 				{/* Experience Form */}
@@ -111,7 +154,7 @@ export default function Builder() {
 								</div>
 							))}
 
-							<button type="button" onClick={() => AddAchievementToExperience(e.ID, experiences)}>+</button>
+							<button type="button" onClick={() => AddAchievementToExperience(e.ID)}>+</button>
 						</ul>
 
 						<button type="submit">Save</button>
