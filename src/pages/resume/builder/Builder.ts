@@ -2,7 +2,7 @@ import { GetFormData } from "../../../utils/forms.util"
 
 export const GetIntroductionData = () => {
 	const data = localStorage['resume-introduction']
-	if (!data) return {}
+	if (!data) return
 	const introduction = JSON.parse(data)
 	return introduction
 }

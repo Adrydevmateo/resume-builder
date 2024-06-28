@@ -1,26 +1,39 @@
-import { FormEvent, useEffect } from "react"
+import { FormEvent, useEffect, useState } from "react"
 import BuilderStore from "./Builder.store"
 import { GetIntroductionData, SaveIntroductionData } from "./Builder"
 
 export default function Builder() {
 
-	const { candidate_name, candidate_title, candidate_introduction, SetCandidateName, SetCandidateTitle, SetCandidateIntroduction, experiences, AddExperience, AddAchievementToExperience, education, AddEducation, AddAchievementToEducation, certifications, AddCertification, interests, AddInterest, SavePersonalInfo, skills, AddSkill, SaveSkills, tools, AddTool } = BuilderStore()
+	const { experiences, AddExperience, AddAchievementToExperience, education, AddEducation, AddAchievementToEducation, certifications, AddCertification, interests, AddInterest, SavePersonalInfo, skills, AddSkill, SaveSkills, tools, AddTool } = BuilderStore()
 
-	useEffect(() => {
-		const introduction = GetIntroductionData()
-		return () => {
-			//#region Introduction
-			SetCandidateName(introduction.candidate_name)
-			SetCandidateTitle(introduction.candidate_title)
-			SetCandidateIntroduction(introduction.candidate_introduction)
-			//#endregion Introduction
-		}
-	}, [])
+	const [introduction, setIntroduction] = useState({
+		candidate_name: '',
+		candidate_title: '',
+		candidate_introduction: ''
+	})
+
+	const LoadIntroduction = () => {
+		const data = localStorage['resume-introduction']
+		if (!data) return
+		const introduction_data = JSON.parse(data)
+		setIntroduction({
+			...introduction,
+			candidate_name: introduction_data['candidate-name'],
+			candidate_title: introduction_data['candidate-title'],
+			candidate_introduction: introduction_data['candidate-introduction'],
+		})
+	}
 
 	const HandleSaveIntroduction = (e: FormEvent) => {
 		e.preventDefault()
 		SaveIntroductionData(e.target as HTMLFormElement)
 	}
+
+	useEffect(() => {
+		return () => {
+			LoadIntroduction()
+		}
+	}, [])
 
 	return (
 		<div id="builder-page">
@@ -32,26 +45,26 @@ export default function Builder() {
 			{/* Candidate Introduction */}
 			<form id="introduction-form" onSubmit={HandleSaveIntroduction}>
 				<h2>Introduction</h2>
-				<h3>Name: {candidate_name}</h3>
-				<h3>Title: {candidate_title}</h3>
-				<h3>Introduction: {candidate_introduction}</h3>
+				<h3>Name: {introduction.candidate_name}</h3>
+				<h3>Title: {introduction.candidate_title}</h3>
+				<h3>Introduction: {introduction.candidate_introduction}</h3>
 
 				{/* Candidate Name */}
 				<div className="form-field">
-					<label htmlFor='candidate_name'>Your Name</label>
-					<input type="text" name="candidate_name" id='candidate_name' placeholder="Ex: Adry ..." value={candidate_name} onChange={({ target }) => SetCandidateName(target.value)} />
+					<label htmlFor='candidate-name'>Your Name</label>
+					<input type="text" name="candidate-name" id='candidate-name' placeholder="Ex: Adry ..." value={introduction.candidate_name} onChange={({ target }) => setIntroduction({ ...introduction, candidate_name: target.value })} />
 				</div>
 
 				{/* Candidate Title */}
 				<div className="form-field">
-					<label htmlFor='candidate_title'>Your Title</label>
-					<input type="text" name="candidate_title" id='candidate_title' placeholder="Ex: Web Developer ..." value={candidate_title} onChange={({ target }) => SetCandidateTitle(target.value)} />
+					<label htmlFor='candidate-title'>Your Title</label>
+					<input type="text" name="candidate-title" id='candidate-title' placeholder="Ex: Web Developer ..." value={introduction.candidate_title} onChange={({ target }) => setIntroduction({ ...introduction, candidate_title: target.value })} />
 				</div>
 
 				{/* Candidate Introduction */}
 				<div className="form-field">
-					<label htmlFor='candidate_introduction'>Introduction</label>
-					<input type="text" name="candidate_introduction" id='candidate_introduction' placeholder="Ex: I'm a ..." value={candidate_introduction} onChange={({ target }) => SetCandidateIntroduction(target.value)} />
+					<label htmlFor='candidate-introduction'>Introduction</label>
+					<input type="text" name="candidate-introduction" id='candidate-introduction' placeholder="Ex: I'm a ..." value={introduction.candidate_introduction} onChange={({ target }) => setIntroduction({ ...introduction, candidate_introduction: target.value })} />
 				</div>
 
 				<button type="submit">Save</button>
