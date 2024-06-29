@@ -6,6 +6,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import HomeLayout from './layouts/Home.layout.tsx'
 
 const Home = lazy(() => import('./pages/home/Home.page.tsx'))
+const Sandbox = lazy(() => import('./sandbox/Sandbox.tsx'))
 const SignIn = lazy(() => import('./pages/account/sign-in/Sign-In.tsx'))
 const SignUp = lazy(() => import('./pages/account/sign-up/Sign-Up.tsx'))
 const ForgotPassword = lazy(() => import('./pages/account/forgot-password/Forgot-Password.tsx'))
@@ -84,6 +85,14 @@ const router = createBrowserRouter([
      <Builder />
     </Suspense>
    </Authorize>
+  )
+ },
+ {
+  path: '/sandbox',
+  element: (
+   <Suspense fallback={<LoadingScreen />}>
+    <Sandbox />
+   </Suspense>
   )
  },
  {
