@@ -1,22 +1,39 @@
-import { FormEvent } from 'react'
+import { FormEvent, useState } from 'react'
 import './Sandbox.style.css'
+
+enum ExperienceFromData {
+	ID = 'experience_id',
+	NAME = 'experience_name',
+	EMPLOYER = 'experience_employer'
+}
+
+enum Storage {
+	EXPERIENCES = 'resume-experiences'
+}
+
+type Experience = {
+	experience_id: string,
+	experience_name: string,
+	experience_employer: string,
+}
 
 export default function Sandbox() {
 
-	enum ExperienceFromData {
-		ID = 'experience_id',
-		NAME = 'experience_name',
-		EMPLOYER = 'experience_employer'
-	}
+	const [experiences, setExperiences] = useState<Array<Experience>>([{
+		experience_id: crypto.randomUUID(),
+		experience_name: '',
+		experience_employer: ''
+	}])
 
-	enum Storage {
-		EXPERIENCES = 'resume-experiences'
-	}
+	const UpdateExperience = (property: ExperienceFromData, experience_id: string, new_value: string) => {
+		const new_experiences = experiences.map((e) => {
+			if (e.experience_id === experience_id) {
+				e[property] = new_value
+			}
+			return e
+		})
 
-	type Experience = {
-		experience_id: string,
-		experience_name: string,
-		experience_employer: string,
+		setExperiences(new_experiences)
 	}
 
 	const GetExperiencesFromData = (form: HTMLFormElement) => {
@@ -52,8 +69,6 @@ export default function Sandbox() {
 		}
 
 		localStorage[Storage.EXPERIENCES] = JSON.stringify(experiences)
-
-		console.log('Experiences: ', JSON.parse(localStorage[Storage.EXPERIENCES]))
 	}
 
 	const HandleSubmit = (e: FormEvent) => {
@@ -61,7 +76,7 @@ export default function Sandbox() {
 		const form = e.target as HTMLFormElement
 
 		const data = GetExperiencesFromData(form)
-		// console.log('Data: ', data)
+		console.log('Data: ', data)
 
 		SaveExperience(data)
 
@@ -71,16 +86,19 @@ export default function Sandbox() {
 		<div id="sandbox-page">
 			<h1>Sandbox</h1>
 
-			<form onSubmit={HandleSubmit}>
-				{/* a6f1b63e-c61f-4931-b9fe-f89999dc91cb */}
-				<input type="hidden" name={ExperienceFromData.ID} value='a6f1b63e-c61f-4931-b9fe-f89999dc91cb' />
+			{
+				experiences.map((e) => (
+					<form onSubmit={HandleSubmit} key={e.experience_id}>
+						<input type="hidden" name={ExperienceFromData.ID} value={e.experience_id} />
 
-				<input type="text" name={ExperienceFromData.NAME} id="experience_name" />
+						<input type="text" name={ExperienceFromData.NAME} id="experience_name" value={e.experience_name} onChange={({ target }) => UpdateExperience(ExperienceFromData.NAME, e.experience_id, target.value)} />
 
-				<input type="text" name={ExperienceFromData.EMPLOYER} id="experience_employer" />
+						<input type="text" name={ExperienceFromData.EMPLOYER} id="experience_employer" value={e.experience_employer} onChange={({ target }) => UpdateExperience(ExperienceFromData.EMPLOYER, e.experience_id, target.value)} />
 
-				<button type="submit">Save</button>
-			</form>
+						<button type="submit">Save</button>
+					</form>
+				))
+			}
 		</div>
 	)
 }
